@@ -1,41 +1,16 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { customConfig }from "./customConfig.js";
-import Webcam from "react-webcam";
+import { customConfig } from "./customConfig.js";
+import FileUploadutil from "./components/FileUploadutil.js"
+import CamCaptureutil from "./components/CamCaptureutil.js"
+
 class App extends Component {
-  state = {
-    fileSelected: null,
-    prediction: ''
-  };
-  fileSelectHandler = (props) => {
-    console.log(props.target.files[0]);
-    this.setState({
-      fileSelected: props.target.files[0],
-    });
-  };
-
-  fileUploadHandler = () => {
-    const fd = new FormData();
-    fd.append("image", this.state.fileSelected, this.state.fileSelected.name);
-    axios.post(customConfig.predictionUrl, fd).then((res) => {
-      console.log(res.data);
-      this.setState({
-        prediction : res.data.result
-      });
-    });
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <input type="file" onChange={this.fileSelectHandler} />
-        <button onClick={this.fileUploadHandler}> UPLOAD </button>
-        <span>
-          <h3>{this.state.prediction}</h3>
-        </span>
+  render(){
+    return(
+      <div>
+        <FileUploadutil customConfig={customConfig}/>
+        <CamCaptureutil customConfig={customConfig}/>
       </div>
-    );
-  }
+  )}
 }
 
 export default App;

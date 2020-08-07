@@ -21,18 +21,54 @@ def home():
     return response
 
 
-@app.route("/getPrediction", methods=["GET", "POST"])
-def getPrediction():
+@app.route("/getPredictionFromImageFile", methods=["GET", "POST"])
+def getPredictionFromImageFile():
     if request.method == "POST":
         print(request.files)
         file = request.files['image']
         utilObj = MlUtility(modelPath=modelPath)
-        img = utilObj.loadImage(fileObj = file)
-        img.save('test.png')
+        img = utilObj.loadImageStream(fileObj = file)
+        # img.save('test.png')
         imageArray = utilObj.preprocessImage(imgObj = img)
         cnn_model = utilObj.loadModel()
         prediction = utilObj.generatePrediction(model = cnn_model,imageArray = imageArray)
         # print(prediction)
+        respObj = {
+            "status": "success",
+            "message": "image received",
+            "result": prediction
+        }
+        response = Response(json.dumps(respObj), status=200,
+                            mimetype='application/json')
+        response.headers['Access-Control-Allow-Origin'] = '*'
+
+    else:
+        respObj = {
+            "status": "failure",
+            "message": "method not found, only post allowed",
+            "result": "undefined"
+        }
+        response = Response(json.dumps(respObj), status=404,
+                            mimetype='application/json')
+        response.headers['Access-Control-Allow-Origin'] = '*'
+
+    return response
+
+@app.route("/getPredictionFromImageString", methods=["GET", "POST"])
+def getPredictionFromImageString():
+    if request.method == "POST":
+        # print(dir(request))
+        imageObj = json.loads(request.data)
+
+        imageString = imageObj['imageString'].split(',')[1]
+        utilObj = MlUtility(modelPath=modelPath)
+        img = utilObj.loadImageBase64(imageString = imageString)
+        # img.save('test.png')
+
+        imageArray = utilObj.preprocessImage(imgObj = img)
+        cnn_model = utilObj.loadModel()
+        prediction = utilObj.generatePrediction(model = cnn_model,imageArray = imageArray)
+
         respObj = {
             "status": "success",
             "message": "image received",
