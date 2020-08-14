@@ -1,7 +1,6 @@
 import tensorflow as tf
 from keras.preprocessing import image
 from PIL import Image
-import cv2 as cv
 import numpy as np
 import base64
 import io
