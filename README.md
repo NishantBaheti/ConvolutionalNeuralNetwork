@@ -14,11 +14,9 @@
 
 ```If you want to generate an SSL cert for development purposes for use with tomcat, you can do it using this one liner (requires JDK on your machine, so this doesnt use openssl).
 
-```
+keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=localhost, OU=NA, O=NA, L=NA, S=NA, C=NA" -keystore keystore.jks -validity 9999 -storepass changeme -keypass changeme
 
-- keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=localhost, OU=NA, O=NA, L=NA, S=NA, C=NA" -keystore keystore.jks -validity 9999 -storepass changeme -keypass changeme
 
-```
 This generates a keystore.jks file with a password of changeme using a keyAlias of tomcat that's valid for 9999 days for localhost
 
 In your tomcat/conf/server.xml, you'd need to specify it like so in your <Connector>
