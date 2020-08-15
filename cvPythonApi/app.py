@@ -14,8 +14,11 @@ def home():
         "status": "success",
         "message": "Up and Running Api"
     }
-    response = Response(json.dumps(respObj), status=200,
-                        mimetype='application/json')
+    response = Response(
+        json.dumps(respObj), 
+        status=200,
+        mimetype='application/json' 
+    )
     response.headers['Access-Control-Allow-Origin'] = '*'
 
     return response
