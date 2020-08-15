@@ -12,7 +12,8 @@
 
 ### Setting up Tomcat with https
 
-```If you want to generate an SSL cert for development purposes for use with tomcat, you can do it using this one liner (requires JDK on your machine, so this doesnt use openssl).
+```
+If you want to generate an SSL cert for development purposes for use with tomcat, you can do it using this one liner (requires JDK on your machine, so this doesnt use openssl).
 
 keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=localhost, OU=NA, O=NA, L=NA, S=NA, C=NA" -keystore keystore.jks -validity 9999 -storepass changeme -keypass changeme
 
