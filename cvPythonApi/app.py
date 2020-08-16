@@ -8,6 +8,7 @@ app = Flask(__name__)
 CORS(app)
 modelPath = './cnn_model'
 
+
 @app.route("/", methods=["GET"])
 def home():
     respObj = {
@@ -15,9 +16,9 @@ def home():
         "message": "Up and Running Api"
     }
     response = Response(
-        json.dumps(respObj), 
+        json.dumps(respObj),
         status=200,
-        mimetype='application/json' 
+        mimetype='application/json'
     )
     response.headers['Access-Control-Allow-Origin'] = '*'
 
@@ -30,11 +31,12 @@ def getPredictionFromImageFile():
         print(request.files)
         file = request.files['image']
         utilObj = MlUtility(modelPath=modelPath)
-        img = utilObj.loadImageStream(fileObj = file)
+        img = utilObj.loadImageStream(fileObj=file)
         # img.save('test.png')
-        imageArray = utilObj.preprocessImage(imgObj = img)
+        imageArray = utilObj.preprocessImage(imgObj=img)
         cnn_model = utilObj.loadModel()
-        prediction = utilObj.generatePrediction(model = cnn_model,imageArray = imageArray)
+        prediction = utilObj.generatePrediction(
+            model=cnn_model, imageArray=imageArray)
         # print(prediction)
         respObj = {
             "status": "success",
@@ -57,6 +59,7 @@ def getPredictionFromImageFile():
 
     return response
 
+
 @app.route("/getPredictionFromImageString", methods=["GET", "POST"])
 def getPredictionFromImageString():
     if request.method == "POST":
@@ -65,12 +68,13 @@ def getPredictionFromImageString():
 
         imageString = imageObj['imageString'].split(',')[1]
         utilObj = MlUtility(modelPath=modelPath)
-        img = utilObj.loadImageBase64(imageString = imageString)
+        img = utilObj.loadImageBase64(imageString=imageString)
         # img.save('test.png')
 
-        imageArray = utilObj.preprocessImage(imgObj = img)
+        imageArray = utilObj.preprocessImage(imgObj=img)
         cnn_model = utilObj.loadModel()
-        prediction = utilObj.generatePrediction(model = cnn_model,imageArray = imageArray)
+        prediction = utilObj.generatePrediction(
+            model=cnn_model, imageArray=imageArray)
 
         respObj = {
             "status": "success",
@@ -92,3 +96,6 @@ def getPredictionFromImageString():
         response.headers['Access-Control-Allow-Origin'] = '*'
 
     return response
+
+
+# flask run -h 0.0.0.0 -p 5443 --cert=./cert/cvapp.crt --key=./cert/cvapp.key
