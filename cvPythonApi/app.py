@@ -32,7 +32,6 @@ def getPredictionFromImageFile():
         file = request.files['image']
         utilObj = MlUtility(modelPath=modelPath)
         img = utilObj.loadImageStream(fileObj=file)
-        # img.save('test.png')
         imageArray = utilObj.preprocessImage(imgObj=img)
         cnn_model = utilObj.loadModel()
         prediction = utilObj.generatePrediction(
@@ -69,7 +68,6 @@ def getPredictionFromImageString():
         imageString = imageObj['imageString'].split(',')[1]
         utilObj = MlUtility(modelPath=modelPath)
         img = utilObj.loadImageBase64(imageString=imageString)
-        # img.save('test.png')
 
         imageArray = utilObj.preprocessImage(imgObj=img)
         cnn_model = utilObj.loadModel()
