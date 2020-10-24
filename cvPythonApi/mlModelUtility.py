@@ -31,11 +31,15 @@ class MlUtility:
         -------
         img (): image object 
         """
-        # img = Image.read(fileObj.stream)
-        img = image.load_img(
-            fileObj.stream,
-            target_size=(64, 64)
-        )
+
+        # img = image.load_img(
+        #     fileObj.stream,
+        #     target_size=(64, 64)
+        # )
+        img = Image.open(fileObj.stream)
+        img = img.resize(size=(64, 64))
+        # img.show()
+        # print(img)
         return img
 
     def loadImageBase64(self, imageString):
@@ -48,10 +52,14 @@ class MlUtility:
         -------
         img (): image object 
         """
-        img = image.load_img(
-            io.BytesIO(base64.b64decode(imageString)),
-            target_size=(64, 64)
-        )
+        # img = image.load_img(
+        #     io.BytesIO(base64.b64decode(imageString)),
+        #     target_size=(64, 64)
+        # )
+
+        img = Image.open(io.BytesIO(base64.b64decode(imageString)))
+        img = img.resize(size=(64, 64))
+        img.show()
         return img
 
     def preprocessImage(self, imgObj):
