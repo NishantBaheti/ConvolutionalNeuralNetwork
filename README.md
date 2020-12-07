@@ -42,3 +42,13 @@ This means the values above should now be put as attributes of connector/SSLHost
 ### open port
 
 - sudo ufw allow 8443
+
+### Update server.xml with port 8443 tag using sed
+
+    https_tag='<Connector\tport="8443"\tprotocol="org.apache.coyote.http11.Http11NioProtocol"\tmaxThreads="150"\tSSLEnabled="true">\n<SSLHostConfig>\n<Certificate\tcertificateKeyAlias="tomcat"\tcertificateKeystoreFile="conf/keystore.jks"\tcertificateKeystorePassword="changeme"\ttype="RSA"/>\n</SSLHostConfig>\n</Connector>'
+
+
+    sed -i '\/<Service name="Catalina">/a '$https_tag /opt/tomcat/conf/server.xml
+
+- Some info like keystore location can be updated either by variable name or location info
+- spaces are replaced by '\t' and new lines are replaced by '\n'

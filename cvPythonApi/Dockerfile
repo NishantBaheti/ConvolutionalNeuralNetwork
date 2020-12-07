@@ -6,9 +6,12 @@ COPY . /app
 
 RUN pip --no-cache-dir install -r requirements.txt
 
-EXPOSE 8081
+EXPOSE 5443
 
-ENTRYPOINT ["gunicorn","-b 0.0.0.0:8081","-w 4","app:app"]
+ENTRYPOINT ["gunicorn","--certfile ./cert/cvapp.crt","--keyfile ./cert/cvapp.key","-b 0.0.0.0:5443","-w 4","app:app"]
+
+
+# ENTRYPOINT ["gunicorn","--certfile ./cert/cvapp.crt", "--keyfile ./cert/cvapp.key" ,"-b 0.0.0.0:5443","-w 4","app:app"]
 
 
 # docker build -t cvpythonapi:1.0.0 . 
