@@ -17,10 +17,10 @@ camObj = cv.VideoCapture(0)
 while camObj.isOpened():
     ret, frame = camObj.read()
     cv.imshow('frame',frame)
-    #frame = cv.resize(frame, (128, 128))
+    frame = cv.resize(frame, (128, 128))
     
-    #test_image = np.expand_dims(frame, axis=0)
-    #result = cnn.predict(x=test_image)
+    test_image = np.expand_dims(frame, axis=0)
+    result = cnn.predict(x=test_image)
 
-    #print(dict(zip(classes,result[0])))
-    #time.sleep(2)
+    print(dict(zip(classes,result[0])))
+    time.sleep(2)
